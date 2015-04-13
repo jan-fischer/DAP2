@@ -1,0 +1,53 @@
+public class Main {
+
+	
+	//AUFGABE 1
+	public static int euclid(int a, int b) {
+		if (b == 0) {
+			return a;
+		} else {
+			return euclid(b, a % b);
+		}
+	}
+
+	
+	
+	
+	//AUFGABE 2
+	public static void prim(int n, int o) {
+		//Initialisierung
+		boolean isPrime[] = new boolean[n];
+		boolean ausgabe = o==0;
+		int counter = 0;
+		
+		//Initialisieren des Arrays
+		for(int i = 0;i<isPrime.length; i++){
+			isPrime[i] = true;
+		}
+		
+		//Algorithmus (Muss noch geändert werden; wofür steht -o?)
+		
+	
+		for(int i = 2; i<isPrime.length; i++){
+			if(isPrime[i]==true){
+			
+				if(ausgabe) System.out.println(i);
+				if(i <= o) counter++;
+				
+				for(int j = i*2; j<isPrime.length; j+=i){
+					isPrime[j] = false;
+				}
+			}
+		}
+		
+		System.out.println("Counter: "+counter);
+		
+		
+	}
+
+	// Ausführen des Programms
+	public static void main(String[] args) {
+		System.out.println(euclid(264, 846));
+		prim(100,0);
+	}
+}
