@@ -19,7 +19,17 @@ public class Point {
 	}
 	
 	
+	public boolean gleich(Point p){
+		boolean stimmt = true;
+		if(p.dimension != this.dimension) return false;
+		else{
+			for(int i = 0; i< this.feld.length; i++){
+				if(p.feld[i]!=this.feld[i]) stimmt = false;				
+			}	
 	
+		}
+		return stimmt;
+	}
 	
 	
 	
