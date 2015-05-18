@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
+import javax.management.RuntimeErrorException;
+
 public class Anwendung {
 	
 
@@ -39,7 +41,8 @@ public class Anwendung {
 			System.out.println("Berechnetes Intervalscheduling: ");
 			printIntervalArrayList(intervalScheduling(A));
 		} catch (Exception e) {
-			
+			System.out.println("Dateipfad nicht gefunden: ");
+			e.printStackTrace();
 		}
 
 	}
@@ -99,7 +102,7 @@ public class Anwendung {
 			printArray(latenessScheduling(A));
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Dateipfad nicht gefunden: ");
 			e.printStackTrace();
 			
 		}
@@ -108,6 +111,7 @@ public class Anwendung {
 	
 	//Lateness-Algo
 	public static int[] latenessScheduling(ArrayList<Job> jobs) {
+		int maxVerspätung = 0;
 		int n = jobs.size();
 		int[] A = new int[n];
 		int z = 0;
@@ -115,19 +119,24 @@ public class Anwendung {
 		for (int i = 0; i < n; i++) {
 			A[i] = z;
 			z += jobs.get(i).getDauer();
+			int verspätung = z-jobs.get(i).getDeadline();
+			if(verspätung > maxVerspätung) maxVerspätung = verspätung;
 		}
-
+		
+		
+		System.out.println("Verspätung: "+maxVerspätung);
 		return A;
 	}
 	
 	
 	
 	//______________________Ausgaben____________________________________________
-	private static void printIntervalArrayList(ArrayList<Interval> A){
-		
+	private static void printIntervalArrayList(ArrayList<Interval> A) {
+
 		System.out.print("[");
-		for(int i = 0; i<A.size();i++){
-			System.out.print("["+A.get(i).getStart()+", "+A.get(i).getEnd()+"], ");
+		for (int i = 0; i < A.size(); i++) {
+			System.out.print("[" + A.get(i).getStart() + ", "
+					+ A.get(i).getEnd() + "], ");
 		}
 		System.out.println("]");
 	}
@@ -158,17 +167,20 @@ private static void printJobArrayList(ArrayList<Job> A){
 		if (args.length == 2) {// TODO Fehlerbehandlung
 			methode = args[0];
 			path = args[1];
-
+		}else{
+			throw new RuntimeException("Anzahl der Argumente muss zwei betragen!");
 		}
 
 		if (methode.equals("Interval")) {
 			System.out.println("Bearbeite Datei '"+path+"'");
 			startInterval(path);
 
-		} else {
+		} else if(methode.equals("Lateness")) {
 			System.out.println("Bearbeite Datei '"+path+"'");
 			startLateness(path);
 
+		} else{
+			throw new IllegalArgumentException("Erstes Argument muss entweder 'Interval' oder 'Lateness' sein");
 		}
 
 	}

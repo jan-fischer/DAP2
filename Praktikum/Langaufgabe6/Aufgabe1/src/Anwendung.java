@@ -1,39 +1,27 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Anwendung {
 	public static ArrayList<Interval> intervalScheduling(
 			ArrayList<Interval> intervals) {
-		
+
 		int n = intervals.size();
 		ArrayList<Interval> A = new ArrayList<Interval>();
 		A.add(intervals.get(0));
 		int j = 0;
-		
-		for(int i = 1; i<n; i++){
-			if(intervals.get(i).getStart() >= intervals.get(j).getEnd()){
+
+		for (int i = 1; i < n; i++) {
+			if (intervals.get(i).getStart() >= intervals.get(j).getEnd()) {
 				A.add(intervals.get(i));
-				j=i;
+				j = i;
 			}
 		}
-		
+
 		return A;
-	}
-	
-	public static ArrayList<Interval> sort(ArrayList<Interval>intervals){
-		ArrayList<Interval> s = new ArrayList<Interval>();
-		for(int n=intervals.size();n>1;n--){
-			for(int i= 0; i<n-1; i++){
-				if(intervals.get(i).getEnd()>intervals.get(i+1).getEnd()){
-					Interval inv = intervals.get(i+1);
-					intervals.set(i+1, intervals.get(i));
-					intervals.set(i, inv);
-				}
-			}
-		}
-		return s;
 	}
 
 	public static void main(String[] args) {
@@ -41,46 +29,53 @@ public class Anwendung {
 		if (args.length == 1) {
 			path = args[0];
 		}
-		
+
 		String zeile;
 		ArrayList<Interval> A = new ArrayList<Interval>();
 		try {
 			RandomAccessFile file = new RandomAccessFile(path, "r");
-			
+
 			zeile = file.readLine();
-			while(zeile!=null){
-				
-				StringTokenizer st = new StringTokenizer(zeile,",");
-				
+			while (zeile != null) {
+
+				StringTokenizer st = new StringTokenizer(zeile, ",");
+
 				int start = Integer.parseInt(st.nextToken());
 				int end = Integer.parseInt(st.nextToken());
 				Interval ivall = new Interval(start, end);
 				A.add(ivall);
 				zeile = file.readLine();
-				
+
 			}
-			
-			System.out.println("Array nach dem Scan:");
-			for(int i = 0;i<A.size();i++){
-				System.out.println(A.get(i));
-			}
-			System.out.println("------------------------------");
+
+			file.close();
+
+			System.out.println("Unsortiert: ");
+			printIntervalArrayList(A);
+
+			Collections.sort(A);
+
+			System.out.println("Sortiert: ");
+			printIntervalArrayList(A);
+
+			System.out.println("Berechnetes Intervalscheduling: ");
+			printIntervalArrayList(intervalScheduling(A));
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		System.out.println("JO");
-		
-		sort(A);
-		ArrayList<Interval> test = intervalScheduling(A);
-		System.out.println("Ausgabe des Ergebnisses:");
-		for(int i = 0;i<test.size();i++){
-			System.out.println(test.get(i));
+
+	}
+
+	private static void printIntervalArrayList(ArrayList<Interval> A) {
+
+		System.out.print("[");
+		for (int i = 0; i < A.size(); i++) {
+			System.out.print("[" + A.get(i).getStart() + ", "
+					+ A.get(i).getEnd() + "], ");
 		}
-		
-		
-		
+		System.out.println("]");
 	}
 
 }
