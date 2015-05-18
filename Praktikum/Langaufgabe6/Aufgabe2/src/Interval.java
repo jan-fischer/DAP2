@@ -1,5 +1,5 @@
 
-public class Interval {
+public class Interval implements Comparable<Interval> {
 	private int a,b;
 	
 	
@@ -19,6 +19,14 @@ public class Interval {
 	
 	public String toString(){
 		return new String("("+a+","+b+")");
+	}
+
+	
+	@Override
+	public int compareTo(Interval o) {
+		if(this.getEnd() < o.getEnd()) return -1;
+		else if(this.getEnd() > o.getEnd()) return 1;
+		else return 0;
 	}
 	
 }

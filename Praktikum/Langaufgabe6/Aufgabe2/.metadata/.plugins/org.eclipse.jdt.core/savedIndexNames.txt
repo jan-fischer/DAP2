@@ -1,0 +1,1 @@
+INDEX VERSION 1.127+C:\Users\Jan Fischer\Github\jan\dap2\Praktikum\Langaufgabe6\Aufgabe2\.metadata\.plugins\org.eclipse.jdt.core

@@ -1,92 +1,175 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Anwendung {
+	
+
+	//_____________________Interval___________________________
+	private static void startInterval(String path) {
+
+		try {
+
+			
+			ArrayList<Interval> A = new ArrayList<Interval>();
+
+			RandomAccessFile file = new RandomAccessFile(path, "r");
+
+			String zeile = file.readLine();
+			while (zeile != null) {
+
+				StringTokenizer st = new StringTokenizer(zeile, ",");
+
+				int start = Integer.parseInt(st.nextToken());
+				int end = Integer.parseInt(st.nextToken());
+
+				Interval ivall = new Interval(start, end);
+				A.add(ivall);
+				zeile = file.readLine();
+			}
+			file.close();
+			System.out.println("Unsortiert: ");
+			printIntervalArrayList(A);
+			Collections.sort(A);
+			System.out.println("Sortiert: ");
+			printIntervalArrayList(A);
+
+			System.out.println("Berechnetes Intervalscheduling: ");
+			printIntervalArrayList(intervalScheduling(A));
+		} catch (Exception e) {
+			
+		}
+
+	}
+
+	//Interval-Algo
 	public static ArrayList<Interval> intervalScheduling(
 			ArrayList<Interval> intervals) {
-		
+
 		int n = intervals.size();
 		ArrayList<Interval> A = new ArrayList<Interval>();
 		A.add(intervals.get(0));
 		int j = 0;
-		
-		for(int i = 1; i<n; i++){
-			if(intervals.get(i).getStart() >= intervals.get(j).getEnd()){
+
+		for (int i = 1; i < n; i++) {
+			if (intervals.get(i).getStart() >= intervals.get(j).getEnd()) {
 				A.add(intervals.get(i));
-				j=i;
+				j = i;
 			}
 		}
-		
+
 		return A;
 	}
 	
-	public static int[] latenessScheduling(ArrayList<Job> jobs){
-		
-	}
 	
-	public static ArrayList<Interval> sortIntervalls(ArrayList<Interval>intervals){
-		ArrayList<Interval> s = new ArrayList<Interval>();
-		for(int n=intervals.size();n>1;n--){
-			for(int i= 0; i<n-1; i++){
-				if(intervals.get(i).getEnd()>intervals.get(i+1).getEnd()){
-					Interval inv = intervals.get(i+1);
-					intervals.set(i+1, intervals.get(i));
-					intervals.set(i, inv);
-				}
-			}
-		}
-		return s;
-	}
+	
+	//_______________________Lateness________________________________________
 
-	public static void main(String[] args) {
-		String path = null;
-		String methode = null;
-		if (args.length == 1) {//TODO Fehlerbehandlung
-			methode = args[0];
-			path = args[1];
-		}
-		
-		String zeile;
-		ArrayList<Interval> A = new ArrayList<Interval>();
+	private static void startLateness(String path) {
 		try {
-			RandomAccessFile file = new RandomAccessFile(path, "r");
 			
-			zeile = file.readLine();
-			while(zeile!=null){
-				
-				StringTokenizer st = new StringTokenizer(zeile,",");
-				
+			ArrayList<Job> A = new ArrayList<Job>();
+
+			RandomAccessFile file = new RandomAccessFile(path, "r");
+
+			String zeile = file.readLine();
+			while (zeile != null) {
+
+				StringTokenizer st = new StringTokenizer(zeile, ",");
+
 				int start = Integer.parseInt(st.nextToken());
 				int end = Integer.parseInt(st.nextToken());
-				Interval ivall = new Interval(start, end);
-				A.add(ivall);
+
+				Job job = new Job(start, end);
+				A.add(job);
+
 				zeile = file.readLine();
-				
+
 			}
-			
-			System.out.println("Array nach dem Scan:");
-			for(int i = 0;i<A.size();i++){
-				System.out.println(A.get(i));
-			}
-			System.out.println("------------------------------");
+
+			file.close();
+			System.out.println("Unsortiert: ");
+			printJobArrayList(A);
+			Collections.sort(A);
+			System.out.println("Sortiert: ");
+			printJobArrayList(A);
+			System.out.println("Berechnetes Latenessscheduling");
+			printArray(latenessScheduling(A));
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
-		
-		System.out.println("JO");
-		
-		sortIntervalls(A);
-		ArrayList<Interval> test = intervalScheduling(A);
-		System.out.println("Ausgabe des Ergebnisses:");
-		for(int i = 0;i<test.size();i++){
-			System.out.println(test.get(i));
+
+	}
+	
+	//Lateness-Algo
+	public static int[] latenessScheduling(ArrayList<Job> jobs) {
+		int n = jobs.size();
+		int[] A = new int[n];
+		int z = 0;
+
+		for (int i = 0; i < n; i++) {
+			A[i] = z;
+			z += jobs.get(i).getDauer();
 		}
+
+		return A;
+	}
+	
+	
+	
+	//______________________Ausgaben____________________________________________
+	private static void printIntervalArrayList(ArrayList<Interval> A){
 		
+		System.out.print("[");
+		for(int i = 0; i<A.size();i++){
+			System.out.print("["+A.get(i).getStart()+", "+A.get(i).getEnd()+"], ");
+		}
+		System.out.println("]");
+	}
+	
+private static void printJobArrayList(ArrayList<Job> A){
 		
-		
+		System.out.print("[");
+		for(int i = 0; i<A.size();i++){
+			System.out.print("["+A.get(i).getDauer()+", "+A.get(i).getDeadline()+"], ");
+		}
+		System.out.println("]");
+	}
+	
+	private static void printArray(int[] A){
+		System.out.print("[");
+		for(int i = 0; i<A.length; i++){
+			System.out.print(A[i]+", ");
+		}
+		System.out.println("]");
 	}
 
+	// _____________________________Main____________________________________________
+
+	public static void main(String[] args) {
+		String methode = "i";
+		String path = null;
+
+		if (args.length == 2) {// TODO Fehlerbehandlung
+			methode = args[0];
+			path = args[1];
+
+		}
+
+		if (methode.equals("Interval")) {
+			System.out.println("Bearbeite Datei '"+path+"'");
+			startInterval(path);
+
+		} else {
+			System.out.println("Bearbeite Datei '"+path+"'");
+			startLateness(path);
+
+		}
+
+	}
 }
