@@ -1,0 +1,2 @@
+INDEX VERSION 1.127+/home/fische01/github/jan-fischer/dap2/Praktikum/Langaufgabe6/.metadata/.plugins/org.eclipse.jdt.core
+2483303369.index
