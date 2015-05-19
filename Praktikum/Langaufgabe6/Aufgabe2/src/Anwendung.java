@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
-import javax.management.RuntimeErrorException;
-
 public class Anwendung {
 	
 
@@ -14,11 +12,12 @@ public class Anwendung {
 
 		try {
 
-			
+			//Datei wird eingelesen
 			ArrayList<Interval> A = new ArrayList<Interval>();
 
+			//Datei wird ge√∂ffnet
 			RandomAccessFile file = new RandomAccessFile(path, "r");
-
+			//Zeile f√ºr Zeile wird jetzt als ein Intervall interpretiert
 			String zeile = file.readLine();
 			while (zeile != null) {
 
@@ -32,15 +31,19 @@ public class Anwendung {
 				zeile = file.readLine();
 			}
 			file.close();
+			
+			//Ausgabe
 			System.out.println("Unsortiert: ");
 			printIntervalArrayList(A);
 			Collections.sort(A);
 			System.out.println("Sortiert: ");
 			printIntervalArrayList(A);
 
+			//Ausgabe nach IntevalScheduling
 			System.out.println("Berechnetes Intervalscheduling: ");
 			printIntervalArrayList(intervalScheduling(A));
 		} catch (Exception e) {
+			//Wird der Dateipfad nicht gefunden wird eine Exception ausgel√∂st
 			System.out.println("Dateipfad nicht gefunden: ");
 			e.printStackTrace();
 		}
@@ -48,17 +51,18 @@ public class Anwendung {
 	}
 
 	//Interval-Algo
+	
 	public static ArrayList<Interval> intervalScheduling(
 			ArrayList<Interval> intervals) {
 
-		int n = intervals.size();
+		int n = intervals.size(); //n wird die Menge an Intevallen zugewiesen
 		ArrayList<Interval> A = new ArrayList<Interval>();
-		A.add(intervals.get(0));
+		A.add(intervals.get(0));//Das erste Interval der sortierten wird nun in die Ausgabe eingef√ºgt
 		int j = 0;
 
 		for (int i = 1; i < n; i++) {
-			if (intervals.get(i).getStart() >= intervals.get(j).getEnd()) {
-				A.add(intervals.get(i));
+			if (intervals.get(i).getStart() >= intervals.get(j).getEnd()) { //Nun wird f√ºr jeden Interval gepr√ºft ob es kompatibel ist
+				A.add(intervals.get(i)); //wenn kompatiblit√§t vorliegt wird es in die Ausgabe eingef√ºgt
 				j = i;
 			}
 		}
@@ -70,7 +74,7 @@ public class Anwendung {
 	
 	//_______________________Lateness________________________________________
 
-	private static void startLateness(String path) {
+	private static void startLateness(String path) { // die Datei Werden eingelesen analog zu Oben!
 		try {
 			
 			ArrayList<Job> A = new ArrayList<Job>();
@@ -111,20 +115,23 @@ public class Anwendung {
 	
 	//Lateness-Algo
 	public static int[] latenessScheduling(ArrayList<Job> jobs) {
-		int maxVersp‰tung = 0;
-		int n = jobs.size();
+		int maxVerspaetung = 0; 
+		int n = jobs.size(); // um alle Tupel zu betrachen
 		int[] A = new int[n];
-		int z = 0;
+		int z = 0; // Summe alle jobsdauer siehe Beispiel
 
 		for (int i = 0; i < n; i++) {
+			//da die Tupel nach Deadline aufsteigend sortiert sind ,w√§hlen wir die Erste 
+			//und erh√∂hen die Summe(Z) um Jobdauer
+			
 			A[i] = z;
 			z += jobs.get(i).getDauer();
-			int versp‰tung = z-jobs.get(i).getDeadline();
-			if(versp‰tung > maxVersp‰tung) maxVersp‰tung = versp‰tung;
+			int verspaetung = z-jobs.get(i).getDeadline(); // Berechnung der Versp√§tung
+			if(verspaetung > maxVerspaetung) maxVerspaetung = verspaetung; // ggf. erhohen wenn gr√∂√üer als Maximal 
 		}
 		
 		
-		System.out.println("Versp‰tung: "+maxVersp‰tung);
+		System.out.println("VerspÔøΩtung: "+maxVerspaetung); // Drucken maxversp√§tung aus
 		return A;
 	}
 	
@@ -135,26 +142,27 @@ public class Anwendung {
 
 		System.out.print("[");
 		for (int i = 0; i < A.size(); i++) {
-			System.out.print("[" + A.get(i).getStart() + ", "
-					+ A.get(i).getEnd() + "], ");
+			System.out.print(A.get(i).toString()); //Ausgabe der Intervalle in einer AL
 		}
 		System.out.println("]");
 	}
 	
-private static void printJobArrayList(ArrayList<Job> A){
+	private static void printJobArrayList(ArrayList<Job> A){
 		
 		System.out.print("[");
-		for(int i = 0; i<A.size();i++){
-			System.out.print("["+A.get(i).getDauer()+", "+A.get(i).getDeadline()+"], ");
+		for(int i = 0; i<A.size()-1;i++){
+			System.out.print(A.get(i).toString()+","); //Ausgabe der Jobs in einer AL
 		}
+		System.out.print(A.get(A.size()-1).toString());
 		System.out.println("]");
 	}
 	
 	private static void printArray(int[] A){
 		System.out.print("[");
-		for(int i = 0; i<A.length; i++){
+		for(int i = 0; i<A.length-1; i++){//Ausgabe eines Arrays
 			System.out.print(A[i]+", ");
 		}
+		System.out.print(A[A.length-1]);
 		System.out.println("]");
 	}
 
@@ -164,10 +172,11 @@ private static void printJobArrayList(ArrayList<Job> A){
 		String methode = "i";
 		String path = null;
 
-		if (args.length == 2) {// TODO Fehlerbehandlung
+		if (args.length == 2) {
 			methode = args[0];
 			path = args[1];
 		}else{
+			//Wenn die anzahl der Argumente unpassend ist
 			throw new RuntimeException("Anzahl der Argumente muss zwei betragen!");
 		}
 
@@ -180,6 +189,7 @@ private static void printJobArrayList(ArrayList<Job> A){
 			startLateness(path);
 
 		} else{
+			// erstes Argument muss Interval oder Lateness betragen
 			throw new IllegalArgumentException("Erstes Argument muss entweder 'Interval' oder 'Lateness' sein");
 		}
 
