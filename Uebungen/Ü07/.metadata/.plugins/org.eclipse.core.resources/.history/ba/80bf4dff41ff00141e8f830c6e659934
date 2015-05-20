@@ -2,18 +2,12 @@
 public class Main {
 	static int remainingBonus = 50;
 	int[] I ={1,2,3,4};
-	static int[] B = {35,10,15,20};
-	static int[] P = {3,10,20,50};
-	static boolean[] benutzt = {false, false, false, false};
+	static int[] B = {10,15,35,20};
+	static int[] P = {10,20,3,50};
 	
 	public static int A(int i, int j){
 		
-		if(i>0 && j>0) {
-			int a = A(i-1,j-B[i])+P[i];
-			int b = A(i-1,j);
-			
-			
-		}
+		if(i>0 && j>0) return Math.min(A(i-1,j-B[i])+P[i], A(i-1,j));
 		else return(P[i]);
 	}
 	
