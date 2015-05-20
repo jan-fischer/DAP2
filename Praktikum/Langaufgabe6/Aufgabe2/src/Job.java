@@ -23,7 +23,7 @@ public class Job implements Comparable<Job> {
 	@Override
 	public int compareTo(Job o) {
 
-		if (this.getDeadline() < o.getDeadline())
+		if (this.getDeadline() < o.getDeadline()) 
 			return -1;
 		else if (this.getDeadline() > o.getDeadline())
 			return 1;

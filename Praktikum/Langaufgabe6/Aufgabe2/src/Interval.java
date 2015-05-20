@@ -10,23 +10,23 @@ public class Interval implements Comparable<Interval> {
 		
 	}
 		
-	public int getStart(){
+	public int getStart(){ //Gibt Anfang zurrück
 		return a;
 	}
-	public int getEnd(){
+	public int getEnd(){//Gibt Ende zurrück
 		return b;
 	}
 	
 	public String toString(){
-		return new String("("+a+","+b+")");
+		return new String("("+a+","+b+")"); //Darstllung des Intervalls
 	}
 
 	
 	@Override
-	public int compareTo(Interval o) {
-		if(this.getEnd() < o.getEnd()) return -1;
-		else if(this.getEnd() > o.getEnd()) return 1;
-		else return 0;
+	public int compareTo(Interval o) { 
+		if(this.getEnd() < o.getEnd()) return -1; //Ist das Ende kleiner als das Ende eines anderen Interval dann soll es als kleiner gelten
+		else if(this.getEnd() > o.getEnd()) return 1;//Ist das Ende größer als eine Anderes soll es als größer gelten
+		else return 0; //Wenn gleich dann soll eine 0 zurrückgegeben werden
 	}
 	
 }

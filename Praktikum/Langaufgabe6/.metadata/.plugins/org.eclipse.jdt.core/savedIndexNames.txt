@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 INDEX VERSION 1.127+C:\Users\Jan Fischer\Github\jan\dap2\Praktikum\Langaufgabe6\.metadata\.plugins\org.eclipse.jdt.core
 1017853417.index
 1563086041.index
@@ -20,3 +21,20 @@ INDEX VERSION 1.127+C:\Users\Jan Fischer\Github\jan\dap2\Praktikum\Langaufgabe6\
 3716007315.index
 605290374.index
 3604769962.index
+=======
+INDEX VERSION 1.127+/home/fische01/Dokumente/git/jan/dap2/Praktikum/Langaufgabe6/.metadata/.plugins/org.eclipse.jdt.core
+3296782899.index
+3473995434.index
+338253169.index
+2445196926.index
+583186036.index
+1293757579.index
+2625392307.index
+3195785364.index
+218980979.index
+1396111004.index
+1137072017.index
+3561627344.index
+2483303369.index
+3348901630.index
+>>>>>>> d7fcab9688d6e6d4837faecdf0a39caf4b0c0aca

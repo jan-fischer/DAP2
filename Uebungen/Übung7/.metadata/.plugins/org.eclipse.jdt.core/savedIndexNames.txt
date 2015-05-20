@@ -1,0 +1,14 @@
+INDEX VERSION 1.127+/home/fische01/Dokumente/git/jan/dap2/Uebungen/Übung7/.metadata/.plugins/org.eclipse.jdt.core
+1137072017.index
+2834266066.index
+3195785364.index
+1293757579.index
+3348901630.index
+3561627344.index
+2445196926.index
+3473995434.index
+583186036.index
+3296782899.index
+2625392307.index
+1396111004.index
+338253169.index
