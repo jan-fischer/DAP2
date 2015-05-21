@@ -8,7 +8,7 @@ public class Main {
 	
 	public static int A(int i, int j){
 		if(j<=0) return 0;
-		else if(i<0 && j>0) return 100000; //Soll unendlich darstellen
+		else if(i<0 && j>0) return 100000;
 		else return Math.min(A(i-1,j-B[i])+P[i],A(i-1,j));
 	}
 	
