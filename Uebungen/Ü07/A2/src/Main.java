@@ -1,30 +1,33 @@
 
 public class Main {
 	static int remainingBonus = 50;
-	int[] I ={1,2,3,4};
-	static int[] B = {35,10,15,20};
-	static int[] P = {3,10,20,50};
-	static boolean[] benutzt = {false, false, false, false};
+	static int[] I ={1,2,3,4,5};
+	static int[] B = {35,10,50,15,20};
+	static int[] P = {3,10,3,20,50};
+	
 	
 	public static int A(int i, int j){
-		
-		if(i>0 && j>0) {
-			int a = A(i-1,j-B[i])+P[i];
-			int b = A(i-1,j);
-			
-			
-		}
-		else return(P[i]);
+		if(j<=0) return 0;
+		else if(i<0 && j>0) return 100000;
+		else return Math.min(A(i-1,j-B[i])+P[i],A(i-1,j));
 	}
 	
 	public static void main(String[] args) {
-		int[] mem = new int[B.length];
-		for(int i = 0; i< B.length; i++){
-			mem[i]=-1;
-			mem[i]=A(i,50);
-			System.out.println(mem[i]);
+		int[][] mem = new int[I.length][50];
+		System.out.print("\t");
+		for(int z = 0; z<I.length; z++) System.out.print(z+"\t");
+		for(int j = 0;j<50; j++){
+		
+			System.out.print("\n"+j+":|\t");
+			for(int i = 0; i< I.length; i++){
+				
+				mem[i][j] = A(i,j);
+				System.out.print(mem[i][j]+"\t");
+			}
 			
 		}
+		
+		System.out.println("\n\n"+mem[3][49]);
 		
 		
 	}
