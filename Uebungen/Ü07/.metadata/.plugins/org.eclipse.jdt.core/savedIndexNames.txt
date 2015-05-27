@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 INDEX VERSION 1.127+C:\Users\Jan Fischer\Github\jan\dap2\Uebungen\Ü07\.metadata\.plugins\org.eclipse.jdt.core
 3142721794.index
 605290374.index
@@ -19,3 +20,26 @@ INDEX VERSION 1.127+C:\Users\Jan Fischer\Github\jan\dap2\Uebungen\Ü07\.metadata\
 1337478678.index
 1017853417.index
 3604769962.index
+=======
+INDEX VERSION 1.127+C:\Users\Jan\Documents\GitHub\jan\dap2\Uebungen\Ü07\.metadata\.plugins\org.eclipse.jdt.core
+3176364129.index
+881303192.index
+1654984216.index
+3963179895.index
+2448026493.index
+847618560.index
+881895235.index
+3142721794.index
+2958705335.index
+3776425001.index
+248351807.index
+1832311958.index
+358050146.index
+290714306.index
+844601494.index
+3097394219.index
+2143716467.index
+2394392208.index
+3520661010.index
+949515501.index
+>>>>>>> 944a7ebf9b8b8f2457aef1df494d3b0f21564b6f
