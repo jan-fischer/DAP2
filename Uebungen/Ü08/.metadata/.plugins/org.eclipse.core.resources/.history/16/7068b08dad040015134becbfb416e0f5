@@ -1,6 +1,6 @@
 public class Main {
 	public static void main(String[] args) {
-		int[] A = {0,10,7,10,8,2,5,1,8,16,6}; //Die 0 ist nur da um den Pseudocode besser darzustellen.
+		int[] A = {0,7,10,8,2,5,1,8,16,6}; //Die 0 ist nur da um den Pseudocode besser darzustellen.
 		int n = A.length-1; //Wegen 1...n siehe Pseudocode
 		
 		//BottomUpMethode:
@@ -20,32 +20,26 @@ public class Main {
 				auswahl[i] = (i-1);
 			}
 		}
-		System.out.print(" Index:\t\t");
+		
 		for(int i = 0; i<auswahl.length; i++){
 			System.out.print(i+"\t");
 		}
-		System.out.print("\n Auswahl:\t");
+		System.out.println();
 		for(int i = 0; i<auswahl.length; i++){
 			System.out.print(auswahl[i]+"\t");
 		}
-		System.out.print("\n A:\t\t");
-		for(int i = 0; i<auswahl.length; i++){
-			System.out.print(A[i]+"\t");
-		}
+		System.out.println();
+		System.out.println("Maxsumme:"+mem[n]);
 		
-		System.out.println("\nMaxsumme:"+mem[n]);
-		
-		System.out.print("Herleiten von Array B: [");
 		int i = auswahl.length-1;
 		while(i>0){
 			if(i-1 == auswahl[i] &&auswahl[i]!=0){
 				i = auswahl[i];
 			}else{
-				System.out.print(i+" ");
+				System.out.println(i);
 				i = auswahl[i];
 			}
 		}
-		System.out.println("]");
 	}
 	
 		
