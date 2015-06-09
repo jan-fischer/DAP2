@@ -2,35 +2,43 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Stack;
 
 public class Main {
 
-	public static Hashtable<String, Integer> algo(String[] input, double THETA) {
+	public static ArrayList<String> algo(String[] input, double t) {
 		System.out.println("Algo");
 		Hashtable<String, Integer> numbers = new Hashtable<String, Integer>();
+		
 		for (int i = 0; i < input.length; i++) {
 			Integer n = numbers.get(input[i]);
 			if (n != null) {
-				n = n + 1;
+				numbers.put(input[i],n+1);
 			} else {
 				numbers.put(input[i], 1);
 			}
 
-			if (numbers.size() > 1 / THETA) {
+			if (numbers.size() > (2.0/t)) {
 				for (Object s :  numbers.keySet().toArray()) {
 					int count = numbers.get(s);
-					numbers.put((String) s, count - 1);
-
-					if (count == 0) {
+					numbers.remove((String) s);
+					numbers.put((String) s, count-1);
+					if (count-1 == 0) {
 						numbers.remove(s);
 					}
 				}
 			}
 		}
-
-		return numbers;
+		
+		ArrayList<String> out = new ArrayList<String>();
+		for (Object s : numbers.keySet().toArray()) {
+			if(numbers.get((String) s)>=t*input.length/2.0){
+				out.add((String) s);
+			}
+		}
+		return out;
 	}
 
 	public static void printHashtable(Hashtable<String, Integer> K) {
@@ -41,8 +49,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		RandomAccessFile file = new RandomAccessFile("C:/Users/Jan Fischer/Github/jan/dap2/Praktikum/Kurzaufgabe9/A1/src/ex3"
-				+ ".txt","r");
+		RandomAccessFile file = new RandomAccessFile("/home/fische01/Dokumente/git2/dap2/Praktikum/Kurzaufgabe9/A1/src/ex2.txt","r");
 		
 		
 			
@@ -60,7 +67,7 @@ public class Main {
 			input[i]  =(String) stack.pop();
 		}
 		
-		printHashtable(algo(input, 0.000001));
+		System.out.println(algo(input, 0.3).toString());
 	}
 
 }
