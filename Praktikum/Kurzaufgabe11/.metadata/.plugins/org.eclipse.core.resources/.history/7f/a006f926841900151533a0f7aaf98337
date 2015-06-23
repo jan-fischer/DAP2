@@ -1,0 +1,91 @@
+import javax.management.RuntimeErrorException;
+
+public class Heap {
+	int[] array;
+	int heapSize;
+
+	
+	public static void main(String[] args) {
+		Heap h = new Heap(5);
+		for(int i = 1; i<5; i++){
+			h.insert(i);
+		}
+		h.printHeap();
+	}
+	public Heap(int n) {
+		array = new int[n];
+		heapSize = 0;
+	}
+	
+	// METHODS
+	public void heapify(int i){
+		int l = left(i);
+		int r = right(i);
+		int largest;
+		
+		if(l<= heapSize && array[l]>array[i]) largest = l;
+		else largest = i;
+		if(r<= heapSize && array[r]>array[largest]) largest = r;
+		if(largest!=i) heapify(largest);
+	}
+	
+	public void insert(int key){
+		heapSize = heapSize+1;
+		int i = heapSize;
+		while(i>1 && array[parent(i)]<key){
+			array[i]= array[parent(i)];
+			i = parent(i);
+			
+		}
+		array[i] = key;
+	}
+	
+	public void printHeap(){
+		int position= 0;
+		for(int i = 0; i<Math.log(heapSize)/Math.log(2.0);i++){
+			for(int j = 0; j<Math.pow(2, i); j++){
+				System.out.print(array[position++]+" ");
+			}
+			System.out.println();
+		}
+	}
+	
+	public int extractMax(){
+		if((heapSize)<1) new RuntimeException("Kein Element vorhanden");
+		int max = array[1];
+		array[1] = array[heapSize];
+		heapSize = heapSize-1;
+		heapify(1);
+		return max;
+	}
+	
+	//GETTER-Methoden
+	public int left(int i) {
+		int erg = 2 * i;
+		if (erg <= heapSize) {
+			return erg;
+		} else {
+			return -1;
+		}
+	}
+
+	public int right(int i) {
+		int erg = 2 * i + 1;
+		if (erg <= heapSize) {
+			return erg;
+		} else {
+			return -1;
+		}
+	}
+
+	public int parent(int i) {
+		int erg = i/ 2;
+		if (erg <= heapSize) {
+			return erg;
+		} else {
+			return -1;
+		}
+	}
+	
+	
+}
